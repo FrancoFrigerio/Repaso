@@ -1,7 +1,11 @@
 package ar.com.educacionit.dao.hibernate.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+
+import org.hibernate.query.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import ar.com.educacionit.app.domain.Producto;
@@ -40,8 +44,38 @@ public class ProductoResporitoryHibernateImpl implements ProductoRepository{
 
 	@Override
 	public List<Producto> findProductos() throws GenericExeption {
-		// TODO Auto-generated method stub
-		return null;
+				
+		
+			Session session = factory.getCurrentSession();
+
+			List<Producto> products = new ArrayList<Producto>();
+			
+			try {
+
+				// All the action with DB via Hibernate
+				// must be located in one transaction.
+				// Start Transaction.
+				session.getTransaction().begin();
+
+				// Create an HQL statement, query the object.
+				String sql = "Select e from " + Producto.class.getName() + " e ";
+
+				// Create Query object.
+				Query<Producto> query = session.createQuery(sql);
+
+				// Execute query.
+				products = query.getResultList();
+
+				// Commit data.
+				session.getTransaction().commit();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				// Rollback in case of an error occurred.
+				session.getTransaction().rollback();
+			}
+			return products;
+		
 	}
 
 	@Override
