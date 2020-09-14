@@ -59,7 +59,7 @@ public class ProductoResporitoryHibernateImpl implements ProductoRepository{
 
 				// Create an HQL statement, query the object.
 				String sql = "Select e from " + Producto.class.getName() + " e ";
-
+				
 				// Create Query object.
 				Query<Producto> query = session.createQuery(sql);
 
