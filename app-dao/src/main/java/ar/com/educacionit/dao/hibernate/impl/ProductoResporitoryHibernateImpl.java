@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 
 import ar.com.educacionit.app.domain.Producto;
 import ar.com.educacionit.app.domain.TipoProducto;
@@ -38,7 +39,7 @@ public class ProductoResporitoryHibernateImpl implements ProductoRepository{
 		
 		@Override
 	public Producto getProducto(String codigo) throws GenericExeption {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -80,8 +81,38 @@ public class ProductoResporitoryHibernateImpl implements ProductoRepository{
 
 	@Override
 	public Producto createProducto(Producto producto) throws DuplicateException, GenericExeption {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = factory.getCurrentSession();
+
+		try {
+
+			// All the action with DB via Hibernate
+			// must be located in one transaction.
+			// Start Transaction.
+			session.getTransaction().begin();
+
+			session.saveOrUpdate(producto);
+			
+			// Commit data.
+			session.getTransaction().commit();
+		}catch (ConstraintViolationException e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			System.out.println("Error en el ProductoRepository");
+			throw new DuplicateException(e.getCause().getMessage(),e);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Rollback in case of an error occurred.
+			session.getTransaction().rollback();
+			System.out.println("Error en el ProductoRepository");
+
+			throw new GenericExeption(e.getMessage(),e);
+
+		}finally {
+			session.close();
+		}
+		return producto;
+		
 	}
 
 	@Override

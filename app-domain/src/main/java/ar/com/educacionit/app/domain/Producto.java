@@ -107,6 +107,14 @@ public void setTipoProducto(TipoProducto tipoProducto) {
 }
 @Override
 public String toString() {
-	return "Producto [Id=" + Id + ", titulo=" + titulo + ", Precio=" + precio + ", tipoProducto=" + tipoProducto + "]";
+	return "PRODUCTO [ID = " + Id + ", TITULO/DESCRIPCION = " + titulo + ", PRECIO = " + precio + ", TIPO DE PRODUCTO = " + tipoProducto + "]";
+
+
+
+
+
+
+
+
 }
 }

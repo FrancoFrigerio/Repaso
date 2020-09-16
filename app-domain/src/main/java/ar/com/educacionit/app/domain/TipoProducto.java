@@ -1,5 +1,6 @@
 package ar.com.educacionit.app.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,8 @@ public class TipoProducto {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long Id;
+	
+	@Column(name = "descripcion")
 	private String Dscripcion;
 	
 	
