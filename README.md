@@ -1,7 +1,7 @@
 # Repaso
-Repaso JavaWeb-Api
+ JavaWeb-Api
 
-## Repaso General desde Clase 01
+## Desde Clase 01
 
 ### App Maven
 
